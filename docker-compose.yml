@@ -10,6 +10,13 @@ services:
     volumes:
       - ./client:/usr/src/app
       - /usr/src/app/node_modules # disable node_modules mount
+  server-dev:
+    image: server-dev
+    build: ./server
+    ports:
+      - 3001:3000 # 3000 taken by react dev server
+  
+  
 
 # networks:
 
