@@ -4,20 +4,48 @@ services:
   client-dev:
     image: client-dev
     build: ./client
+    container_name: flytrap-client
     stdin_open: true # enable hot reloading
     ports:
       - "3000:3000" 
     volumes:
       - ./client:/usr/src/app
       - /usr/src/app/node_modules # disable node_modules mount
+    networks:
+      - flytrap
   server-dev:
     image: server-dev
     build: ./server
+    container_name: flytrap-server
     ports:
       - 3001:3000 # 3000 taken by react dev server
+    depends_on:
+      - mysql
+    networks:
+      - flytrap
+  mysql:
+    image: mysql:8.0.23
+    container_name: flytrap-db
+    environment: 
+      MYSQL_DATABASE: 'db'
+      # so you dont have to use root
+      MYSQL_USER: 'user'
+      # you can use any password you want
+      MYSQL_PASSWORD: 'password'
+      # password for root access
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      # local exposed port : mysql port from container
+      - '4307:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - flytrap
   
-  
+networks:
+  flytrap:
+    driver: bridge
 
-# networks:
-
-# volumes:
+volumes:
+  mysql-data:
+    driver: local
