@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  client-dev:
+    image: client-dev
+    build: ./client
+    stdin_open: true # enable hot reloading
+    ports:
+      - "3000:3000" 
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules # disable node_modules mount
+
+# networks:
+
+# volumes:
