@@ -1,19 +1,29 @@
-import './App.scss';
 import Card from './Card';
-
-const Logo = () => (
-  <div className="logo-container">
-    <div className="logo"> flytrap </div>
-  </div>
-)
+import styled from 'styled-components';
 
 const App = () => {
   return (
-    <div className="App">
-      <Logo />
+    <Container>
+      <Logo>flytrap</Logo>
       <Card />
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  height: 100vh;
+  background: #FBF3E9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Logo = styled.h1`
+  font-size: 64px;
+  font-weight: bold;
+  text-align: center;
+  color: red; 
+`;
 
 export default App;
