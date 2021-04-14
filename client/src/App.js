@@ -12,7 +12,7 @@ const App = () => {
 
 const Container = styled.div`
   height: 100vh;
-  background: #FBF3E9;
+  background: ${props => props.theme.background};
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -6,8 +6,8 @@ const Card = () => {
     <StyledCard>
       <Input type="text" />
       <Input type="text" />
-      <Button background="red">Log In</Button>
-      <Button background="blue">Demo Account</Button>
+      <Button primary>Log In</Button>
+      <Button>Demo Account</Button>
     </StyledCard>
   ) 
 }
@@ -36,7 +36,7 @@ const Button = styled.button`
   width: 364px;
   border: none;
   border-radius: 6px;
-  background: ${props => props.background};
+  background: ${props => props.primary ? props.theme.primary : props.theme.secondary};
   color: white;
   font-size: 20px;
   font-weight: bold;
