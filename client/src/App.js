@@ -10,6 +10,8 @@ const App = () => {
   );
 }
 
+// STYLED COMPONENTS
+
 const Container = styled.div`
   height: 100vh;
   background: ${props => props.theme.background};

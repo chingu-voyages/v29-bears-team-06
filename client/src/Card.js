@@ -17,6 +17,8 @@ const Card = () => {
   ) 
 }
 
+// STYLED COMPONENTS
+
 const StyledCard = styled.div`
   height: 350px;
   width: 400px;
