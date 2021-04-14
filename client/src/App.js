@@ -20,6 +20,7 @@ const Container = styled.div`
 `;
 
 const Logo = styled.h1`
+  margin-bottom: 30px;
   font-size: 64px;
   font-weight: bold;
   text-align: center;

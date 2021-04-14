@@ -6,8 +6,11 @@ import App from './App';
 
 const theme = {
   primary: "#F50A0A",
+  primaryDark: "#E60909",
   secondary: "#1964FF",
-  background: "#FBF3E9"
+  secondaryDark: "#3773EE",
+  background: "#FBF3E9",
+  gray: "#DDDFE2"
 }
 
 const GlobalStyle = createGlobalStyle`
