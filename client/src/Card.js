@@ -22,7 +22,6 @@ const Card = () => {
 const StyledCard = styled.div`
   height: 350px;
   width: 400px;
-  padding: 5  px 0;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1); 
@@ -62,6 +61,10 @@ const Button = styled.button`
   font-weight: bold;
   transition-duration: 0.2s;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &:focus {
     outline: none;
   }
@@ -82,6 +85,7 @@ const Button = styled.button`
   &.demo {
     width: auto;
     padding: 0 20px;
+    margin: 15px 0;
     background: ${props => props.theme.secondary};
 
     &:hover {
@@ -92,6 +96,7 @@ const Button = styled.button`
 
 const Wrapper = styled.div`
   width: 364px;
+  margin: 5px 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -100,13 +105,18 @@ const Wrapper = styled.div`
 const SmallLink = styled.a`
   font-size: 14px;
   font-weight: 500;
-  color: ${props => props.theme.primary}
+  color: ${props => props.theme.primary};
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 const Divider = styled.div`
   height: 0px;
   width: 364px;
-  border-bottom: 1px solid ${props => props.theme.gray} 
+  border-bottom: 1px solid ${props => props.theme.gray};
 `;
 
 export default Card;
