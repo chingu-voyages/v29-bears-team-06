@@ -1,20 +1,19 @@
-import Card from './Card';
+import React from 'react';
 import styled from 'styled-components';
+import Card from './Card';
 
-const App = () => {
-  return (
-    <Container>
-      <Logo>flytrap</Logo>
-      <Card />
-    </Container>
-  );
-}
+const App = () => (
+  <Container>
+    <Logo>flytrap</Logo>
+    <Card />
+  </Container>
+);
 
 // STYLED COMPONENTS
 
 const Container = styled.div`
   height: 100vh;
-  background: ${props => props.theme.background};
+  background: ${(props) => props.theme.background};
   display: flex;
   flex-direction: column;
   justify-content: center;

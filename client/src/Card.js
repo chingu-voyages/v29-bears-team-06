@@ -1,21 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Card = () => { 
-  return (
-    <StyledCard>
-      <Input type="text" placeholder="Email address" />
-      <Input type="text" placeholder="Password" />
-      <Button className="login">Log In</Button>
-      <Wrapper>
-        <SmallLink>Forgotten Password?</SmallLink>
-        <SmallLink>Create New Account</SmallLink> 
-      </Wrapper>
-      <Divider />
-      <Button className="demo">Demo Account</Button>
-    </StyledCard>
-  ) 
-}
+const Card = () => (
+  <StyledCard>
+    <Input type="text" placeholder="Email address" />
+    <Input type="text" placeholder="Password" />
+    <Button className="login">Log In</Button>
+    <Wrapper>
+      <SmallLink>Forgotten Password?</SmallLink>
+      <SmallLink>Create New Account</SmallLink>
+    </Wrapper>
+    <Divider />
+    <Button className="demo">Demo Account</Button>
+  </StyledCard>
+);
 
 // STYLED COMPONENTS
 
@@ -35,19 +33,19 @@ const Input = styled.input`
   height: 52px;
   width: 364px;
   padding: 14px 16px;
-  border: 1px solid ${props => props.theme.gray};
+  border: 1px solid ${(props) => props.theme.gray};
   border-radius: 6px; 
   font-size: 17px;
 
   &::placeholder { 
-    color: ${props => props.theme.gray};
+    color: ${(props) => props.theme.gray};
     opacity: 1;
   }
 
   &:focus {
     outline: none;
-    border: 1px solid ${props => props.theme.primary};
-    box-shadow: 0 0 0 2px ${props => props.theme.background};
+    border: 1px solid ${(props) => props.theme.primary};
+    box-shadow: 0 0 0 2px ${(props) => props.theme.background};
   }
 `;
 
@@ -75,10 +73,10 @@ const Button = styled.button`
   }
 
   &.login { 
-    background: ${props => props.theme.primary};
+    background: ${(props) => props.theme.primary};
 
     &:hover {
-      background: ${props => props.theme.primaryDark};
+      background: ${(props) => props.theme.primaryDark};
     }
   }
 
@@ -86,10 +84,10 @@ const Button = styled.button`
     width: auto;
     padding: 0 20px;
     margin: 15px 0;
-    background: ${props => props.theme.secondary};
+    background: ${(props) => props.theme.secondary};
 
     &:hover {
-      background: ${props => props.theme.secondaryDark};
+      background: ${(props) => props.theme.secondaryDark};
     }
   } 
 `;
@@ -105,7 +103,7 @@ const Wrapper = styled.div`
 const SmallLink = styled.a`
   font-size: 14px;
   font-weight: 500;
-  color: ${props => props.theme.primary};
+  color: ${(props) => props.theme.primary};
 
   &:hover {
     text-decoration: underline;
@@ -116,7 +114,7 @@ const SmallLink = styled.a`
 const Divider = styled.div`
   height: 0px;
   width: 364px;
-  border-bottom: 1px solid ${props => props.theme.gray};
+  border-bottom: 1px solid ${(props) => props.theme.gray};
 `;
 
 export default Card;
