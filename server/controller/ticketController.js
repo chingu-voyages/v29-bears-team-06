@@ -1,152 +1,126 @@
-
-const Ticket = require('../models/tickets');
-
-var db = [
-    {
-        id: 0,
-        project_id: 0,
-        developer_id: 0,
-        title: 'ticket',
-        description: 'Same ticket description', 
-        type: 'bug',
-        priority: 'high',
-        status: 'inprogress',
-        due_date: '00-00-00',
-        created_at: '00-00-00',
-        updated_at: '00-00-00'
-    }
-];
+const models = require("../models/index");
+const { body, validationResult } = require("express-validator");
 
 exports.invalidRoute = (req, res, next) => {
-    res.send('Invalid route');
-}
-
+	res.send("Invalid route");
+};
 
 exports.getAllTickets = async (req, res, next) => {
-
-    // Return list of all tickets
-    console.log("getAllTickets: [GET] /tickets");
-    try {
-        const ALL = await Ticket.findAll();
-        console.log("OK getAllTickets TICKET: ", ALL.map(i => i.dataValues));
-        return res.status(200).json(ALL);
-    } catch (error) {
-        console.log('ERROR in getAll ' + "TICKET:", error);
-        return res.status(500).json(error);
-    }
-
-    // res.send(db);
+	const tickets = await models.Ticket.findAll();
+	res.send(tickets);
 };
 
 exports.getTicketById = async (req, res, next) => {
+	const id = req.params.id;
 
-    let id = req.params.id;
-
-    console.log("getTicketById: [GET] /users/:id");
-    try {
-        const t = await Ticket.findByPk(id);
-        console.log("OK getTicketById TICKET: ", t.dataValues);
-        return res.status(200).json(t);
-    } catch (error) {
-        console.log('ERROR in getTicketById ' + "TICKET:", error);
-        return res.status(500).json(error);
-    }
-
-
-    // // Return ticket by id
-    // var lookup = {};
-    // for (var i = 0, len = db.length; i < len; i++) {
-    //     lookup[db[i].id] = db[i];
-    // }
-
-    // if (!lookup[req.params.id]) {
-    //     res.status(500).json({
-    //         error: 'Invalid request - id was invalid'
-    //     });
-    // }
-    // else {
-    //     res.json(lookup[req.params.id]);
-    // }
-    
-
+	console.log("getTicketById: [GET] /users/:id");
+	try {
+		const t = await models.Ticket.findByPk(id);
+		console.log("OK getTicketById TICKET: ", t.dataValues);
+		return res.status(200).json(t);
+	} catch (error) {
+		console.log("ERROR in getTicketById " + "TICKET:", error);
+		return res.status(500).json(error);
+	}
 };
 
-exports.createNewTicket = async (req, res, next) => {
+exports.createNewTicket = [
+	// validate
+	body("title")
+		.not()
+		.isEmpty()
+		.withMessage("Title field must not be empty")
+		.trim(),
+	body("project_id")
+		.not()
+		.isEmpty()
+		.withMessage("Project_id field must not be empty")
+		.trim()
+		.isNumeric()
+		.withMessage("Project_id field must be a number"),
+	body("developer_id")
+		.not()
+		.isEmpty()
+		.withMessage("Developer_id field must not be empty")
+		.trim()
+		.isNumeric()
+		.withMessage("Developer_id field must be a number"),
+	body("description")
+		.not()
+		.isEmpty()
+		.withMessage("Description field must not be empty")
+		.trim(),
+	body("type")
+		.not()
+		.isEmpty()
+		.withMessage("Type field must not be empty")
+		.isString()
+		.withMessage("Type field must be a string"),
+	body("priority")
+		.not()
+		.isEmpty()
+		.withMessage("Priority field must not be empty")
+		.isString()
+		.withMessage("Priority field must be a string"),
+	body("status")
+		.not()
+		.isEmpty()
+		.withMessage("Status field must not be empty")
+		.isString()
+		.withMessage("Status field must be a string"),
 
-    let {title, description, type, priority, status, due_date} = req.body;
+	// sanitize
+	body("*").escape(),
 
-    try {
-        const TICKET_MODEL = {
-            title: title,
-            description: description,
-            type: type,
-            priority: priority,
-            status: status,
-            due_date: due_date
-        }
+	async (req, res, next) => {
+		// express-validator result
+		const errors = validationResult(req);
 
-        try {
-            const ticket = await Ticket.create(TICKET_MODEL);
-            console.log("OK createNewTicket TICKET: ", ticket);
-            return res.status(201).json(ticket);
-        } catch (error) {
-            console.log('ERROR in createNewTicket ' + "TICKET:", error);
-            return res.status(500).json(error);
-        }
-    } catch (error) {
-        return res.status(400).json("Bad Request");
-    }
+		if (!errors.isEmpty()) {
+			// There are errors, send error message to client
+			return res.json({ errors: errors.array() });
+		} else {
+			// No errors. create new ticket
+			const {
+				title,
+				project_id,
+				developer_id,
+				description,
+				type,
+				priority,
+				status,
+				due_date,
+			} = req.body;
 
+			await models.Ticket.create({
+				title: title,
+				project_id: project_id,
+				developer_id: developer_id,
+				description: description,
+				type: type,
+				priority: priority,
+				status: status,
+				due_date: due_date,
+			});
 
-    // db.push({
-    //     id: parseInt(Date.now() + Math.random()),
-    //     title: title,
-    //     description: description,
-    //     type: type,
-    //     priority: priority,
-    //     status: status,
-    //     due_date: due_date
-    // });
-    
-    // res.json({
-    //     id: db.length,
-    //     title: title,
-    //     description: description
-    // });
-}
+			return res.status(200);
+		}
+	},
+];
+
+exports.updateTicket = async (req, res, next) => {};
 
 exports.deleteTicketById = async (req, res, next) => {
+	console.log("[DELETE] /tickets/:id");
 
-    console.log("[DELETE] /tickets/:id");
+	let { id } = req.body;
 
-    let {id} = req.body;
-
-    try {
-        const t = await Ticket.destroy({ where: { id: id } });
-        console.log("OK deleteTicketById Ticket: ", );
-        return res.status(200).json(t);
-    } catch (error) {
-        console.log('ERROR in deleteTicketById ' + "TICKET:", error);
-        return res.status(500).json(error);
-    }
-
-    // var lookup = {};
-    // for (var i = 0, len = db.length; i < len; i++) {
-    //     lookup[db[i].id] = db[i];
-    // }
-
-    // if (!lookup[req.body.id]) {
-    //     res.status(500).json({
-    //         error: 'Invalid delete request - id was invalid'
-    //     });
-    // }
-    // else {
-    //     let index = db.map( item => {
-    //         return item.id;
-    //     }).indexOf(req.body.id);
-        
-    //     db.splice(index, 1);
-
-    //     res.send('Delete successful: index ' + req.body.id);
-    // }
-}
+	try {
+		const t = await models.Ticket.destroy({ where: { id: id } });
+		console.log("OK deleteTicketById Ticket: ");
+		return res.status(200).json(t);
+	} catch (error) {
+		console.log("ERROR in deleteTicketById " + "TICKET:", error);
+		return res.status(500).json(error);
+	}
+};
