@@ -12,3 +12,5 @@ exports.loginPost = (req, res, next) => {
         })(req, res, next);
     });
 }
+
+exports.signupPost = (req, res, next) => {};

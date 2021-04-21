@@ -110,6 +110,8 @@ exports.createNewTicket = [
 
 exports.updateTicket = async (req, res, next) => {};
 
+exports.updateTicketById = async (req, res, next) => {};
+
 exports.deleteTicketById = async (req, res, next) => {
 	console.log("[DELETE] /tickets/:id");
 
