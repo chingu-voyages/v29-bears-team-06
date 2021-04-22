@@ -17,7 +17,7 @@ passport.use('local', new localStrategy((username, password, done) => {
                 return done(null, user, { message: 'Login successful' });
             }
             else {
-                return done(null, false, { messsage: 'Incorrect password' })
+                return done(null, false, { message: 'Incorrect password' })
             }
         });
     });
