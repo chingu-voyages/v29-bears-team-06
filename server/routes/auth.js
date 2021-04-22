@@ -4,7 +4,7 @@ const router = express.Router();
 const authController = require("../controller/authController");
 
 /**
- * TICKET ROUTES
+ * AUTH ROUTES
  */
 router.post("/login", authController.loginPost);
 

@@ -1,5 +1,5 @@
 const models = require("../models/index");
-const { body } = require("express-validator");
+const { body, check, validationResult } = require('express-validator');
 const passport = require("passport");
 
 exports.invalidRoute = (req, res, next) => {
@@ -7,6 +7,7 @@ exports.invalidRoute = (req, res, next) => {
 };
 
 exports.loginPost = (req, res, next) => {
+  res.send("login route")
   passport.authenticate("local", (err, user, info) => {
     if (err) return res.status(400).send(err);
 
@@ -19,7 +20,7 @@ exports.loginPost = (req, res, next) => {
   });
 };
 
-exports.signupPost = (req, res, next) => [
+exports.signupPost = [
   //Validate credentials
   body("first_name")
     .trim()
@@ -49,6 +50,7 @@ exports.signupPost = (req, res, next) => [
   check("confirm_password", "Passwords do not match")
     .exists()
     .custom((value, { req }) => value === req.body.password),
+
   // sanitize
   body("*").escape(),
 
