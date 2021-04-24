@@ -1,6 +1,7 @@
 const models = require("../models/index");
 const { body, check, validationResult } = require("express-validator");
 const passport = require("passport");
+const bcrypt = require("bcryptjs");
 
 exports.invalidRoute = (req, res, next) => {
   res.send("Invalid route");
@@ -46,7 +47,7 @@ exports.signupPost = [
         console.log(user);
         if (user) {
           return Promise.reject("Username already exists");
-        } 
+        }
       });
     }),
   body("password")
@@ -59,7 +60,7 @@ exports.signupPost = [
   // sanitize
   body("*").escape(),
 
-  async (req, res, next) => {
+   (req, res, next) => {
     // express-validator result
     const errors = validationResult(req);
 
@@ -70,14 +71,19 @@ exports.signupPost = [
       // No errors. create new user
       const { first_name, last_name, username, password } = req.body;
 
-      await models.User.create({
-        first_name: first_name,
-        last_name: last_name,
-        username: username,
-        password: password,
+      //encrypt password and create user
+      bcrypt.hash(password, 10, (err, hash) => {
+        if (err) return next(err);
+
+        models.User.create({
+          first_name: first_name,
+          last_name: last_name,
+          username: username,
+          password: hash,
+        });
       });
 
-      return res.status(200).send('User created');
+      return res.status(200).send("User created");
     }
   },
 ];
