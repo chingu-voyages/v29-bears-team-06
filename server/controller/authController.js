@@ -1,24 +1,39 @@
 const models = require("../models/index");
-const { body, check, validationResult } = require("express-validator");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
+const { body, check, validationResult } = require("express-validator");
+const { generateToken } = require("../utils/jwt");
+require("../config/passport");
+
+const BCRYPT_SALT_ROUNDS = 12;
 
 exports.invalidRoute = (req, res, next) => {
   res.send("Invalid route");
 };
 
 exports.loginPost = (req, res, next) => {
-  res.send("login route");
-  passport.authenticate("local", (err, user, info) => {
+  passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err) return res.status(400).send(err);
 
-    if (!user) res.status(400).send("Incorrect username or password");
+    if (info !== undefined) console.log(info.message);
 
-    req.logIn(user, (err) => {
-      if (err) return next(err);
-      res.status(200).send("Authentication successful");
-    })(req, res, next);
-  });
+    if (!user) return res.status(400).send("Incorrect username or password");
+    else {
+      req.logIn(user, (err) => {
+        if (err) return next(err);
+
+        models.User.findOne({
+          where: { username: user.username },
+        }).then((user) => {
+          const token = generateToken(user);
+
+          res
+            .status(200)
+            .send({ auth: true, token, message: "Login Successful" });
+        });
+      });
+    }
+  })(req, res, next);
 };
 
 exports.signupPost = [
@@ -44,7 +59,6 @@ exports.signupPost = [
           username: value,
         },
       }).then((user) => {
-        console.log(user);
         if (user) {
           return Promise.reject("Username already exists");
         }
@@ -60,7 +74,7 @@ exports.signupPost = [
   // sanitize
   body("*").escape(),
 
-   (req, res, next) => {
+  (req, res, next) => {
     // express-validator result
     const errors = validationResult(req);
 
@@ -72,7 +86,7 @@ exports.signupPost = [
       const { first_name, last_name, username, password } = req.body;
 
       //encrypt password and create user
-      bcrypt.hash(password, 10, (err, hash) => {
+      bcrypt.hash(password, BCRYPT_SALT_ROUNDS, (err, hash) => {
         if (err) return next(err);
 
         models.User.create({
