@@ -1,5 +1,5 @@
 const models = require("../models/index");
-const { body, check, validationResult } = require('express-validator');
+const { body, check, validationResult } = require("express-validator");
 const passport = require("passport");
 
 exports.invalidRoute = (req, res, next) => {
@@ -7,7 +7,7 @@ exports.invalidRoute = (req, res, next) => {
 };
 
 exports.loginPost = (req, res, next) => {
-  res.send("login route")
+  res.send("login route");
   passport.authenticate("local", (err, user, info) => {
     if (err) return res.status(400).send(err);
 
@@ -38,10 +38,15 @@ exports.signupPost = [
     .isEmail()
     .withMessage("Username must be valid email address")
     .custom((value) => {
-      return User.findOne({ username: value }).then((user) => {
+      return models.User.findOne({
+        where: {
+          username: value,
+        },
+      }).then((user) => {
+        console.log(user);
         if (user) {
           return Promise.reject("Username already exists");
-        }
+        } 
       });
     }),
   body("password")
@@ -72,7 +77,7 @@ exports.signupPost = [
         password: password,
       });
 
-      return res.status(200);
+      return res.status(200).send('User created');
     }
   },
 ];
