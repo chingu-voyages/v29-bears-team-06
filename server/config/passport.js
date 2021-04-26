@@ -1,37 +1,65 @@
-const User = require('./models/User')
-const bcrypt = require('bcryptjs');
-const localStrategy = require('passport-local').Strategy;
+const models = require("../models/index");
+const bcrypt = require("bcryptjs");
+const LocalStrategy = require("passport-local").Strategy;
 
-passport.use('local', new localStrategy((username, password, done) => {
-    User.findOne({ username: username }, (err, user) => {
-        if (err) return done(err);
+const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJWT = require("passport-jwt").ExtractJwt;
+const passport = require("passport");
 
-        if (!user) {
-            return done(null, false, { message: 'Incorrect username or password' });
-        }
-
+passport.use(
+  "local",
+  new LocalStrategy((username, password, done) => {
+    models.User.findOne({ where: { username: username } })
+      .then((user) => {
         bcrypt.compare(password, user.password, (err, result) => {
-            if (err) return done(err);
+          if (err) return done(err);
 
-            if (result) {
-                return done(null, user, { message: 'Login successful' });
-            }
-            else {
-                return done(null, false, { messsage: 'Incorrect password' })
-            }
+          if (result) {
+            return done(null, user, { message: "Login successful" });
+          } else {
+            return done(null, false, {
+              message: "Incorrect username or password",
+            });
+          }
         });
-    });
-}));
+      })
+      .catch((err) => {
+        done(err);
+      });
+  })
+);
+
+const jwtOptions = {
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken("Authorization"),
+  secretOrKey: process.env.JWTSECRET,
+};
+
+passport.use(
+  "jwt",
+  new JwtStrategy(jwtOptions, (jwtPayload, done) => {
+    return models.User.findOne({ id: jwtPayload.sub })
+      .then((user) => {
+        done(null, user);
+      })
+      .catch((err) => {
+        done(err);
+      });
+  })
+);
 
 passport.serializeUser((user, done) => {
-    done(null, user.id)
+  done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-    User.findOne({_id: id}, (err, user) => {
-        const userInformation = {
-            username: user.username,
-        };
-        done(err, userInformation);
+  models.User.findOne({ _id: id })
+    .then((user) => {
+      const userInformation = {
+        username: user.username,
+      };
+      done(null, userInformation);
+    })
+    .catch((err) => {
+      done(err);
     });
 });
