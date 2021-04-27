@@ -91,7 +91,7 @@ exports.createNewProject = [
 	},
 ];
 
-exports.updateProject = [
+exports.updateProjectById = [
 	// validate
 	body("title")
 		.not()

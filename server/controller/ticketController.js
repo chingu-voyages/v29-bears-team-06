@@ -108,7 +108,7 @@ exports.createNewTicket = [
 	},
 ];
 
-exports.updateTicket = [
+exports.updateTicketById = [
 	// validate
 	body("title")
 		.not()
@@ -164,7 +164,7 @@ exports.updateTicket = [
 			// There are errors, send error message to client
 			return res.json({ errors: errors.array() });
 		} else {
-			// No errors. create new ticket
+			// No errors. update ticket
 			const {
 				title,
 				project_id,
