@@ -18,6 +18,9 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* create stacking context for card and bug */
+  position: relative;
+  z-index: 0;
 `;
 
 const Logo = styled.h1`
@@ -25,7 +28,7 @@ const Logo = styled.h1`
   font-size: 64px;
   font-weight: bold;
   text-align: center;
-  color: red; 
+  color: red;
 `;
 
 export default App;

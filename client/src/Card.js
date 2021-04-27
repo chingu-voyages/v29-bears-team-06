@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ReactComponent as BugLogo } from './assets/bug.svg';
 
 const Card = () => (
   <StyledCard>
+    <Bug />
     <Input type="text" placeholder="Email address" />
     <Input type="text" placeholder="Password" />
     <Button className="login">Log In</Button>
@@ -22,11 +24,19 @@ const StyledCard = styled.div`
   width: 400px;
   background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 8px 16px rgba(0, 0, 0, .1); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  position: relative;
+`;
+
+const Bug = styled(BugLogo)`
+  position: absolute;
+  right: -130px;
+  top: -100px;
+  z-index: -1;
 `;
 
 const Input = styled.input`
@@ -34,10 +44,10 @@ const Input = styled.input`
   width: 364px;
   padding: 14px 16px;
   border: 1px solid ${(props) => props.theme.gray};
-  border-radius: 6px; 
+  border-radius: 6px;
   font-size: 17px;
 
-  &::placeholder { 
+  &::placeholder {
     color: ${(props) => props.theme.gray};
     opacity: 1;
   }
@@ -72,12 +82,8 @@ const Button = styled.button`
     transition-duration: 0s;
   }
 
-  &.login { 
+  &.login {
     background: ${(props) => props.theme.primary};
-
-    &:hover {
-      background: ${(props) => props.theme.primaryDark};
-    }
   }
 
   &.demo {
@@ -85,11 +91,7 @@ const Button = styled.button`
     padding: 0 20px;
     margin: 15px 0;
     background: ${(props) => props.theme.secondary};
-
-    &:hover {
-      background: ${(props) => props.theme.secondaryDark};
-    }
-  } 
+  }
 `;
 
 const Wrapper = styled.div`
