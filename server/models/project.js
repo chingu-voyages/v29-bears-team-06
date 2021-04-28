@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
 			title: DataTypes.STRING,
 			manager_id: DataTypes.STRING,
 			description: DataTypes.STRING,
-			priority: DataTypes.STRING,
-			status: DataTypes.STRING,
+			priority: DataTypes.ENUM("HIGH", "MEDIUM", "LOW"),
+			status: DataTypes.ENUM("ASSIGNED", "IN_PROGRESS", "COMPLETED"),
 		},
 		{
 			sequelize,

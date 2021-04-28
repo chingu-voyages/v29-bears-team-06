@@ -18,11 +18,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       priority: {
-				type: Sequelize.STRING,
+				type: Sequelize.ENUM,
+        defaultValue: "HIGH",
 				allowNull: true,
 			},
 			status: {
-				type: Sequelize.STRING,
+				type: Sequelize.ENUM,
+        defaultValue: "ASSIGNED",
 				allowNull: true,
 			},
       createdAt: {

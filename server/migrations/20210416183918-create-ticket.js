@@ -25,15 +25,18 @@ module.exports = {
 				allowNull: true,
 			},
 			type: {
-				type: Sequelize.STRING,
+				type: Sequelize.ENUM,
+				defaultValue: "BUG",
 				allowNull: true,
 			},
 			priority: {
-				type: Sequelize.STRING,
+				type: Sequelize.ENUM,
+				defaultValue: "HIGH",
 				allowNull: true,
 			},
 			status: {
-				type: Sequelize.STRING,
+				type: Sequelize.ENUM,
+				defaultValue: "ASSIGNED",
 				allowNull: true,
 			},
 			due_date: {
