@@ -103,7 +103,7 @@ exports.createNewTicket = [
 				due_date: due_date,
 			});
 
-			return res.status(200);
+			return res.sendStatus(200);
 		}
 	},
 ];
