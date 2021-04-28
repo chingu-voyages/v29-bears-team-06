@@ -56,14 +56,14 @@ db.tickets = require("../models/ticket")(sequelize, Sequelize);
  */
 // Project_User
 db.users.hasMany(db.projects);
-db.projects.hasOne(db.users);
+db.projects.belongsTo(db.users);
 
 // Ticket_User
 db.users.hasMany(db.tickets);
-db.tickets.hasOne(db.users);
+db.tickets.belongsTo(db.users);
 
 // Project_Ticket
 db.projects.hasMany(db.tickets);
-db.tickets.hasOne(db.projects);
+db.tickets.belongsTo(db.projects);
 
 module.exports = db;
