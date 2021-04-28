@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
-import App from './App';
+// import App from './App';
+import Dashboard from './Dashboard';
 
 const theme = {
   primary: '#F50A0A',
-  primaryDark: '#E60909',
   secondary: '#1964FF',
-  secondaryDark: '#3773EE',
   background: '#FBF3E9',
-  gray: '#DDDFE2',
+  gray1: '#4A4646',
+  gray2: 'hsla(0, 0%, 77%, 0.25)',
+  gray3: '#DDDFE2',
 };
 
 const GlobalStyle = createGlobalStyle`
@@ -19,16 +20,23 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
   }
+
   body { 
     font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
   } 
+
+  .material-icons {
+    color: blue !important;
+  }
+
 `;
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <App />
+      {/* <App /> */}
+      <Dashboard />
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root'),

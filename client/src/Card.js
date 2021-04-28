@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { ReactComponent as BugLogo } from './assets/bug.svg';
 
 const Card = () => (
@@ -34,28 +35,29 @@ const StyledCard = styled.div`
 
 const Bug = styled(BugLogo)`
   position: absolute;
-  right: -130px;
-  top: -100px;
+  right: -105px;
+  top: -75px;
   z-index: -1;
+  transform: rotate(27deg);
 `;
 
 const Input = styled.input`
   height: 52px;
   width: 364px;
   padding: 14px 16px;
-  border: 1px solid ${(props) => props.theme.gray};
+  border: 1px solid ${props => props.theme.gray3};
   border-radius: 6px;
   font-size: 17px;
 
   &::placeholder {
-    color: ${(props) => props.theme.gray};
+    color: ${props => props.theme.gray};
     opacity: 1;
   }
 
   &:focus {
     outline: none;
-    border: 1px solid ${(props) => props.theme.primary};
-    box-shadow: 0 0 0 2px ${(props) => props.theme.background};
+    border: 1px solid ${props => props.theme.primary};
+    box-shadow: 0 0 0 2px ${props => props.theme.background};
   }
 `;
 
@@ -83,14 +85,14 @@ const Button = styled.button`
   }
 
   &.login {
-    background: ${(props) => props.theme.primary};
+    background: ${props => props.theme.primary};
   }
 
   &.demo {
     width: auto;
     padding: 0 20px;
     margin: 15px 0;
-    background: ${(props) => props.theme.secondary};
+    background: ${props => props.theme.secondary};
   }
 `;
 
@@ -105,7 +107,7 @@ const Wrapper = styled.div`
 const SmallLink = styled.a`
   font-size: 14px;
   font-weight: 500;
-  color: ${(props) => props.theme.primary};
+  color: ${props => props.theme.primary};
 
   &:hover {
     text-decoration: underline;
@@ -116,7 +118,7 @@ const SmallLink = styled.a`
 const Divider = styled.div`
   height: 0px;
   width: 364px;
-  border-bottom: 1px solid ${(props) => props.theme.gray};
+  border-bottom: 1px solid ${props => props.theme.gray3};
 `;
 
 export default Card;
