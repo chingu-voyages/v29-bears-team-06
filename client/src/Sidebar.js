@@ -63,6 +63,14 @@ const Button = styled.button`
   > span {
     margin-left: 7px;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const Dash = () => (
