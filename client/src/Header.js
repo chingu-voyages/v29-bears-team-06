@@ -50,8 +50,8 @@ const SearchBar = styled.div`
   border: none;
   border-radius: 10px;
 
+  // bad css
   > svg {
-    // bad css
     color: ${props => props.theme.gray1};
   }
 `;

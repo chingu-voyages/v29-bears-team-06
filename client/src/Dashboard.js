@@ -24,10 +24,6 @@ const VerticalContainer = styled.div`
 const HorizontalContainer = styled.div`
   flex-grow: 2;
   display: flex;
-
-  > * {
-    border: 1px solid red;
-  }
 `;
 
 export default Dashboard;
