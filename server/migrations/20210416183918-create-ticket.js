@@ -10,46 +10,39 @@ module.exports = {
 			},
 			project_id: {
 				type: Sequelize.INTEGER,
-				allowNull: true,
 			},
 			developer_id: {
 				type: Sequelize.INTEGER,
-				allowNull: true,
 			},
 			title: {
 				type: Sequelize.STRING,
-				allowNull: true,
 			},
 			description: {
 				type: Sequelize.TEXT,
-				allowNull: true,
 			},
 			type: {
-				type: Sequelize.ENUM,
+				type: Sequelize.ENUM("BUG", "FEATURE", "OTHER"),
 				defaultValue: "BUG",
-				allowNull: true,
 			},
 			priority: {
-				type: Sequelize.ENUM,
+				type: Sequelize.ENUM("HIGH", "MEDIUM", "LOW"),
 				defaultValue: "HIGH",
-				allowNull: true,
 			},
 			status: {
-				type: Sequelize.ENUM,
+				type: Sequelize.ENUM("ASSIGNED", "IN_PROGRESS", "COMPLETED", "CLOSED"),
 				defaultValue: "ASSIGNED",
-				allowNull: true,
 			},
 			due_date: {
 				type: Sequelize.DATE,
-				allowNull: true,
+				defaultValue: new Date(),
 			},
 			createdAt: {
-				allowNull: true,
 				type: Sequelize.DATE,
+				defaultValue: new Date(),
 			},
 			updatedAt: {
-				allowNull: true,
 				type: Sequelize.DATE,
+				defaultValue: new Date(),
 			},
 		});
 	},

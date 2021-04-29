@@ -1,5 +1,7 @@
 "use strict";
 
+const faker = require("faker");
+
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
 		/**
@@ -11,24 +13,21 @@ module.exports = {
 		 *   isBetaMember: false
 		 * }], {});
 		 */
+		const projects = [];
+		const NUMBER_OF_PROJECTS = 10;
 
-		await queryInterface.bulkInsert(
-			"Projects",
-			[
-				{
-					title: "First Project",
-					project_id: 1,
-					developer_id: 1,
-					description: "This is a new Project",
-					priority: "high",
-					status: "in_progress",
-					due_date: new Date(),
-					createdAt: new Date(),
-					updatedAt: new Date(),
-				},
-			],
-			{}
-		);
+		for (let i = 0; i < NUMBER_OF_PROJECTS; i++) {
+			projects.push({
+				title: faker.lorem.sentence(),
+				manager_id: 1,
+				description: faker.lorem.paragraph(),
+				priority: "HIGH",
+				status: "ASSIGNED",
+				due_date: faker.date.future(),
+			});
+		}
+
+		await queryInterface.bulkInsert("Projects", projects, {});
 	},
 
 	down: async (queryInterface, Sequelize) => {

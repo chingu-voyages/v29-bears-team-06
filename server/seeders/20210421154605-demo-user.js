@@ -1,35 +1,43 @@
-'use strict';
+"use strict";
+
+const faker = require("faker");
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
+	up: async (queryInterface, Sequelize) => {
+		/**
+		 * Add seed commands here.
+		 *
+		 * Example:
+		 * await queryInterface.bulkInsert('People', [{
+		 *   name: 'John Doe',
+		 *   isBetaMember: false
+		 * }], {});
+		 */
 
-    await queryInterface.bulkInsert('Users', [{
-      first_name: 'John',
-      last_name: 'Doe',
-      username: 'johndoe@email.com',
-      password: 'password',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }], {});
-  },
+		const users = [];
+    const NUMBER_OF_USERS = 15;  
 
-  down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+		for (let i = 0; i < NUMBER_OF_USERS; i++) {
+			users.push({
+				first_name: faker.name.firstName(),
+				last_name: faker.name.lastName(),
+				username: faker.internet.userName(),
+				email: faker.internet.email(),
+				password: "password",
+			});
+		}
 
-     await queryInterface.bulkDelete('Users', null, {});
-  }
+		await queryInterface.bulkInsert("Users", users, {});
+	},
+
+	down: async (queryInterface, Sequelize) => {
+		/**
+		 * Add commands to revert seed here.
+		 *
+		 * Example:
+		 * await queryInterface.bulkDelete('People', null, {});
+		 */
+
+		await queryInterface.bulkDelete("Users", null, {});
+	},
 };

@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
+			Project.belongsTo(models.User);
+			Project.hasMany(models.Ticket);
 		}
 	}
 	Project.init(
@@ -18,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
 			description: DataTypes.STRING,
 			priority: DataTypes.ENUM("HIGH", "MEDIUM", "LOW"),
 			status: DataTypes.ENUM("ASSIGNED", "IN_PROGRESS", "COMPLETED"),
+			due_date: DataTypes.DATE,
+			createdAt: DataTypes.DATE,
+			updatedAt: DataTypes.DATE,
 		},
 		{
 			sequelize,
